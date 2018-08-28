@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>城市联动</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" type="text/css" href="css/cityPickerSelect.css">
+</head>
+<body class="main_body">
+	<div id="main_demo">
+      	<h2>城市下拉选择组件 联动菜单带搜索插件以及原生效果</h2>
+  
+		<h2>模拟城市-无联动/无搜索</h2>
+		<div class="city-picker-selector" id="city-picker-selector">
+			<div class="city-sitem"><label>省份</label>
+				<div class="selector-item storey province" data-index="0">
+					<a href="javascript:;" class="selector-name reveal">北京市</a>
+					<input type="hidden" name="userProvinceId" class="input-price val-error" value="110000" data-required="userProvinceId">
+					<div class="selector-list listing hide"><ul></ul></div>
+				</div>
+			</div>
+			<div class="city-sitem">
+				<label>城市</label>
+				<div class="selector-item storey city" data-index="1">
+					<a href="javascript:;" class="selector-name reveal">北京市</a>
+					<input type="hidden" name="userCityId" class="input-price val-error" value="110100" data-required="userCityId">
+					<div class="selector-list listing hide"><ul></ul></div>
+				</div>
+			</div>
+			<div class="city-sitem">
+				<label>区/县</label>
+				<div class="selector-item storey district" data-index="2">
+					<a href="javascript:;" class="selector-name reveal">海淀区</a>
+					<input type="hidden" name="userDistrictId" class="input-price val-error" value="110108" data-required="userDistrictId">
+					<div class="selector-list listing hide"><ul></ul></div>
+				</div>
+			</div>
+		</div>
+		<!-- end .city-picker-selector -->
+
+		<h2>模拟城市-联动/搜索</h2>
+		<div class="city-picker-selector" id="city-picker-search">
+			<div class="city-sitem">
+				<label>省份</label>
+				<div class="selector-item storey province" data-index="0">
+					<a href="javascript:;" class="selector-name reveal">河北省</a>
+					<input type="hidden" name="userProvinceId" class="input-price val-error" value="130000" data-required="userProvinceId">
+					<div class="selector-list listing hide">
+						<div class="selector-search">
+							<input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+						</div>
+						<ul></ul>
+					</div>
+				</div>
+			</div>
+			<div class="city-sitem">
+				<label>城市</label>
+				<div class="selector-item storey city" data-index="1">
+					<a href="javascript:;" class="selector-name reveal">石家庄市</a>
+					<input type="hidden" name="userCityId" class="input-price val-error" value="130100" data-required="userCityId">
+					<div class="selector-list listing hide">
+						<div class="selector-search">
+							<input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+						</div>
+						<ul></ul>
+					</div>
+				</div>
+			</div>
+			<div class="city-sitem">
+				<label>区/县</label>
+				<div class="selector-item storey district" data-index="2">
+					<a href="javascript:;" class="selector-name reveal">长安区</a>
+					<input type="hidden" name="userDistrictId" class="input-price val-error" value="130102" data-required="userDistrictId">
+					<div class="selector-list listing hide">
+						<div class="selector-search">
+							<input type="text" class="input-search" value="" placeholder="拼音、中文搜索">
+						</div>
+						<ul></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end .city-picker-selector -->
+
+		<h2>原生城市-无联动</h2>
+		<div class="city-picker-select">
+			<div class="city-sitem">
+				<label>省份</label>
+				<select name="userProvinceId" data-index="0" class="province">
+					<option>请选择省份</option>
+				</select>
+			</div>
+			<div class="city-sitem">
+				<label>城市</label>
+				<select name="userCityId" data-index="1" class="city">
+					<option class="caller">请选择城市</option>
+				</select>
+			</div>
+			<div class="city-sitem">
+				<label>区/县</label>
+				<select name="userDistrictId" data-index="2" class="district">
+					<option class="caller">请选择区县</option>
+				</select>
+			</div>
+		</div>
+    </div>
+	<!--jQuery-->
+	<script type="text/javascript" src="js/jquery.js" ></script>
+	<script type="text/javascript" src="js/citydata.js" ></script>
+	<script type="text/javascript" src="js/cityPickerSelect.js" ></script>
+	<script>
+
+		$(function () {
+
+			//模拟城市-无联动/无搜索
+			var selector = $('#city-picker-selector').cityPicker({
+				dataJson: cityData,
+				renderMode: true,
+				search: false,
+				linkage: false
+			})
+			$('#city-picker-selector').on('choose-province.citypicker', function(event, tagert, storage) {
+				console.log(storage);
+			});
+
+			//设置城市
+			selector.setCityVal([{
+				'id': '110000',
+				'name': '北京市'
+			}, {
+				'id': '110100',
+				'name': '北京市'
+			}, {
+				'id': '110108',
+				'name': '海淀区'
+			}]);
+
+			//模拟城市-联动/搜索
+			$('#city-picker-search').cityPicker({
+				dataJson: cityData,
+				renderMode: true,
+				search: true,
+				linkage: true
+			});
+
+			//原生城市-无联动
+			var select = $('.city-picker-select').cityPicker({
+				dataJson: cityData,
+				renderMode: false,
+				linkage: false
+			});
+
+		});
+	
+	</script>
+</body>
+</html>
